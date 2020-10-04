@@ -1,0 +1,78 @@
+
+space.png
+size: 8192,8192
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ESTRELA  MEDIAS E PEQUENAS
+  rotate: false
+  xy: 0, 0
+  size: 4501, 6751
+  orig: 4501, 6751
+  offset: 0, 0
+  index: -1
+
+space2.png
+size: 8192,8192
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+NEBULOSA
+  rotate: false
+  xy: 0, 0
+  size: 4501, 6751
+  orig: 4501, 6751
+  offset: 0, 0
+  index: -1
+
+space3.png
+size: 8192,8192
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ESTRELA  MEDIAS
+  rotate: false
+  xy: 0, 0
+  size: 4501, 6751
+  orig: 4501, 6751
+  offset: 0, 0
+  index: -1
+
+space4.png
+size: 8192,8192
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+SPACE
+  rotate: false
+  xy: 0, 0
+  size: 4501, 6751
+  orig: 4501, 6751
+  offset: 0, 0
+  index: -1
+
+space5.png
+size: 8192,8192
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ESTRELA  GRANDE
+  rotate: false
+  xy: 0, 0
+  size: 4501, 6751
+  orig: 4501, 6751
+  offset: 0, 0
+  index: -1
+
+space6.png
+size: 8192,8192
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ESTRELA  PEQUENA
+  rotate: false
+  xy: 0, 0
+  size: 4501, 6751
+  orig: 4501, 6751
+  offset: 0, 0
+  index: -1
