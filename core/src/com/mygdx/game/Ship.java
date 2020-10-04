@@ -64,6 +64,10 @@ abstract class Ship {
         }
     }
 
+    public void translate(float xChange, float yChange) {
+        boudingBox.setPosition(boudingBox.x + xChange, boudingBox.y + yChange);
+    }
+
     public void draw(Batch batch) {
         batch.draw(shipTextureRegion, boudingBox.x, boudingBox.y, boudingBox.width, boudingBox.height);
         if (shield > 1)
