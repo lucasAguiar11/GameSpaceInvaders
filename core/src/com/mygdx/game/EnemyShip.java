@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class EnemyShip extends Ship {
@@ -19,13 +20,14 @@ public class EnemyShip extends Ship {
     public Laser[] fireLasers() {
         Laser[] laser = new Laser[2];
 
-        laser[0] = new Laser(xPosition + width * 0.18f,
-                yPosition - laserHeight,
+        //onde o laser vai sair da nave
+        laser[0] = new Laser(boudingBox.x + boudingBox.width * 0.18f,
+                boudingBox.y - laserHeight,
                 laserWidth, laserHeight,
                 laserMovementSpeed, laserTextureRegion);
 
-        laser[1] = new Laser(xPosition + width * 0.82f,
-                yPosition - laserHeight,
+        laser[1] = new Laser(boudingBox.x + boudingBox.width * 0.82f,
+                boudingBox.y - laserHeight,
                 laserWidth, laserHeight,
                 laserMovementSpeed, laserTextureRegion);
 
@@ -33,4 +35,13 @@ public class EnemyShip extends Ship {
 
         return laser;
     }
+
+    @Override
+    public void draw(Batch batch) {
+        batch.draw(shipTextureRegion, boudingBox.x, boudingBox.y, boudingBox.width, boudingBox.height);
+        if (shield > 1)
+            batch.draw(shieldTextureRegion, boudingBox.x, boudingBox.y - boudingBox.height
+                    * 0.2f, boudingBox.width, boudingBox.height);
+    }
+
 }

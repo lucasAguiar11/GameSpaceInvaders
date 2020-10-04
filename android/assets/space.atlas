@@ -4,11 +4,25 @@ size: 8192,8192
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ESTRELA  MEDIAS E PEQUENAS
+ESCUDO
   rotate: false
   xy: 0, 0
+  size: 1259, 862
+  orig: 1259, 862
+  offset: 0, 0
+  index: -1
+ESTRELA  MEDIAS E PEQUENAS
+  rotate: false
+  xy: 0, 862
   size: 4501, 6751
   orig: 4501, 6751
+  offset: 0, 0
+  index: -1
+PLAYER
+  rotate: false
+  xy: 4501, 6930
+  size: 671, 683
+  orig: 671, 683
   offset: 0, 0
   index: -1
 
