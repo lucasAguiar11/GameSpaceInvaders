@@ -20,9 +20,23 @@ ESTRELA  MEDIAS E PEQUENAS
   index: -1
 PLAYER
   rotate: false
-  xy: 4501, 6930
-  size: 671, 683
-  orig: 671, 683
+  xy: 4501, 5713
+  size: 1918, 1900
+  orig: 1918, 1900
+  offset: 0, 0
+  index: -1
+TIRO00
+  rotate: false
+  xy: 4501, 5472
+  size: 196, 241
+  orig: 196, 241
+  offset: 0, 0
+  index: -1
+TIRO01
+  rotate: false
+  xy: 6419, 7360
+  size: 162, 253
+  orig: 162, 253
   offset: 0, 0
   index: -1
 
