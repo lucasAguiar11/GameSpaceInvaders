@@ -4,37 +4,79 @@ size: 8192,8192
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+ALIEN ESCUDO-01
+  rotate: false
+  xy: 1259, 531
+  size: 1038, 584
+  orig: 1038, 584
+  offset: 0, 0
+  index: -1
+ALIEN TIRO-01
+  rotate: false
+  xy: 6506, 5917
+  size: 114, 146
+  orig: 114, 146
+  offset: 0, 0
+  index: -1
+ALIEN-01
+  rotate: false
+  xy: 4501, 5873
+  size: 2005, 1993
+  orig: 2005, 1993
+  offset: 0, 0
+  index: -1
 ESCUDO
   rotate: false
-  xy: 0, 0
+  xy: 0, 253
   size: 1259, 862
   orig: 1259, 862
   offset: 0, 0
   index: -1
 ESTRELA  MEDIAS E PEQUENAS
   rotate: false
-  xy: 0, 862
+  xy: 0, 1115
   size: 4501, 6751
   orig: 4501, 6751
   offset: 0, 0
   index: -1
+LULA ALIEN ESCUDO-01
+  rotate: false
+  xy: 4501, 3281
+  size: 1072, 692
+  orig: 1072, 692
+  offset: 0, 0
+  index: -1
+LULA ALIEN TIRO-01
+  rotate: false
+  xy: 4501, 3084
+  size: 109, 197
+  orig: 109, 197
+  offset: 0, 0
+  index: -1
+LULA ALIEN-01
+  rotate: false
+  xy: 6506, 6063
+  size: 973, 1803
+  orig: 973, 1803
+  offset: 0, 0
+  index: -1
 PLAYER
   rotate: false
-  xy: 4501, 5713
+  xy: 4501, 3973
   size: 1918, 1900
   orig: 1918, 1900
   offset: 0, 0
   index: -1
 TIRO00
   rotate: false
-  xy: 4501, 5472
+  xy: 7479, 7625
   size: 196, 241
   orig: 196, 241
   offset: 0, 0
   index: -1
 TIRO01
   rotate: false
-  xy: 6419, 7360
+  xy: 0, 0
   size: 162, 253
   orig: 162, 253
   offset: 0, 0
@@ -45,7 +87,7 @@ size: 8192,8192
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-NEBULOSA
+ESTRELA  GRANDE
   rotate: false
   xy: 0, 0
   size: 4501, 6751
@@ -58,7 +100,7 @@ size: 8192,8192
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ESTRELA  MEDIAS
+NEBULOSA
   rotate: false
   xy: 0, 0
   size: 4501, 6751
@@ -71,7 +113,7 @@ size: 8192,8192
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-SPACE
+ESTRELA  MEDIAS
   rotate: false
   xy: 0, 0
   size: 4501, 6751
@@ -84,7 +126,7 @@ size: 8192,8192
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ESTRELA  GRANDE
+SPACE
   rotate: false
   xy: 0, 0
   size: 4501, 6751

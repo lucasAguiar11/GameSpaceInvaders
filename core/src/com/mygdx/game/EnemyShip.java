@@ -66,8 +66,10 @@ public class EnemyShip extends Ship {
     public void draw(Batch batch) {
         batch.draw(shipTextureRegion, boudingBox.x, boudingBox.y, boudingBox.width, boudingBox.height);
         if (shield > 1)
-            batch.draw(shieldTextureRegion, boudingBox.x, boudingBox.y - boudingBox.height
-                    * 0.2f, boudingBox.width, boudingBox.height);
+            batch.draw(shieldTextureRegion,
+                    boudingBox.x,
+                    boudingBox.y - boudingBox.height * 0.5f,
+                    boudingBox.width, boudingBox.height * 0.5f);
     }
 
 }

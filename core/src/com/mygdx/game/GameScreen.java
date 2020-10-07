@@ -29,20 +29,25 @@ public class GameScreen implements Screen {
     //    private Texture background;
     private TextureRegion[] backgrounds;
 
-    private TextureRegion playerShipTextureRegion, playerShieldTextureRegion,
-            enemyShipTextureRegion, enemyShieldTextureRegion,
-            playerLaserTextureRegion, enemyLaserTextureRegion;
+    private TextureRegion playerShipTextureRegion, playerShieldTextureRegion, playerLaserTextureRegion ;
+
+    //Enemy type 1
+    private TextureRegion enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion;
+
+    //Enemy type 1
+    private TextureRegion enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion;
 
 
-    //    private  int backgroundOffSet;
     private float[] backgroundOffSets = {0, 0, 0, 0, 0, 0};
     private float backgroundMaxScrollingSpeed;
     private float timeBetweenEnemySpawns = 3f;
     private float enemySpanTimer = 0;
+    private int quantityEnemies = 0;
 
     private final int WORLD_WIDTH = 28;
     private final int WORLD_HEIGHT = 128;
     private final float TOUCH_MOVIMENT_THRESHOLD = 0.5f;
+    private final int MAX_ENEMIES = 3;
 
     //gameObjects
     private PlayerShip playerShip;
@@ -54,8 +59,8 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
-//        background = new Texture("bk-nebulosa.gif");
-//        backgroundOffSet = 0;
+        // background = new Texture("bk-nebulosa.gif");
+        // backgroundOffSet = 0;
 
         //set texture with atlas
         textureAtlas = new TextureAtlas("images.atlas");
@@ -69,22 +74,26 @@ public class GameScreen implements Screen {
         backgrounds[4] = TextureSpaceAtlas.findRegion("ESTRELA  MEDIAS E PEQUENAS");
         backgrounds[5] = TextureSpaceAtlas.findRegion("ESTRELA  PEQUENA");
 
-//        backgrounds[0] = textureAtlas.findRegion("Starscape00");
-//        backgrounds[1] = textureAtlas.findRegion("Starscape01");
-//        backgrounds[2] = textureAtlas.findRegion("Starscape02");
-//        backgrounds[3] = textureAtlas.findRegion("Starscape03");
-
         backgroundMaxScrollingSpeed = (float) (WORLD_HEIGHT) / 4;
 
         //init texture;
-        playerShipTextureRegion = TextureSpaceAtlas.findRegion("PLAYER");
-        enemyShipTextureRegion = textureAtlas.findRegion("enemyRed3");
-        playerShieldTextureRegion = TextureSpaceAtlas.findRegion("ESCUDO");
-        enemyShieldTextureRegion = textureAtlas.findRegion("shield1");
-        enemyShieldTextureRegion.flip(false, true);
 
+        //player
+        playerShipTextureRegion = TextureSpaceAtlas.findRegion("PLAYER");
+        playerShieldTextureRegion = TextureSpaceAtlas.findRegion("ESCUDO");
         playerLaserTextureRegion = textureAtlas.findRegion("laserBlue03");
-        enemyLaserTextureRegion = textureAtlas.findRegion("laserRed03");
+
+        //enemy type 1
+        enemyShipTextureRegion = TextureSpaceAtlas.findRegion("ALIEN-01");
+        enemyShieldTextureRegion = TextureSpaceAtlas.findRegion("ALIEN ESCUDO-01");
+        enemyShieldTextureRegion.flip(false, true);
+        enemyLaserTextureRegion = TextureSpaceAtlas.findRegion("ALIEN TIRO-01");
+
+        //enemy type 2
+        enemySquidShipTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN-01");
+        enemySquidShieldTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN-01");
+        enemySquidShieldTextureRegion.flip(false, true);
+        enemySquidLaserTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN TIRO-01");
 
         //set up game obj
         playerShip = new PlayerShip(
@@ -94,10 +103,19 @@ public class GameScreen implements Screen {
                 0.4f, 5, 2, 0.5f,
                 playerShipTextureRegion, playerShieldTextureRegion, playerLaserTextureRegion);
 
-        enemyShipList = new LinkedList<>();
 
+        enemyShipList = new LinkedList<>();
         playerLaserList = new LinkedList<>();
         enemyLaserList = new LinkedList<>();
+
+
+        enemyShipList.add(new SquidEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
+                (float) WORLD_HEIGHT - 5,
+                6, 14,
+                20, 20,
+                2, 3.5f,
+                2, 0.8f,
+                enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion));
 
         batch = new SpriteBatch();
     }
@@ -111,6 +129,7 @@ public class GameScreen implements Screen {
         renderBackground(deltaTime);
 
         detectInput(deltaTime);
+
         playerShip.update(deltaTime);
 
         spawnEnemyShip(deltaTime);
@@ -138,14 +157,16 @@ public class GameScreen implements Screen {
 
     private void spawnEnemyShip(float deltaTime) {
         enemySpanTimer += deltaTime;
-        if (enemySpanTimer > timeBetweenEnemySpawns) {
-            enemyShipList.add(new EnemyShip(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
+        if (enemySpanTimer > timeBetweenEnemySpawns && quantityEnemies < MAX_ENEMIES) {
+            enemyShipList.add(new CellEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
                     (float) WORLD_HEIGHT - 5,
                     6, 14,
-                    48, 2,
-                    0.4f, 7, 2, 0.8f,
+                    20, 20,
+                    2, 3.5f,
+                    2, 0.8f,
                     enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion));
             enemySpanTimer -= timeBetweenEnemySpawns;
+            quantityEnemies++;
         }
 
     }
@@ -241,6 +262,7 @@ public class GameScreen implements Screen {
                     //contact enemy
                     enemyShip.hit(laser);
                     laserListIterator.remove();
+                    break;
                 }
             }
 
@@ -278,7 +300,6 @@ public class GameScreen implements Screen {
                 Collections.addAll(enemyLaserList, lasers);
             }
         }
-
 
         //draw lasers
         //remove old lasers
