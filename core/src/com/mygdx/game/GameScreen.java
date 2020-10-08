@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
     //    private Texture background;
     private TextureRegion[] backgrounds;
 
-    private TextureRegion playerShipTextureRegion, playerShieldTextureRegion, playerLaserTextureRegion ;
+    private TextureRegion playerShipTextureRegion, playerShieldTextureRegion, playerLaserTextureRegion;
 
     //Enemy type 1
     private TextureRegion enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion;
@@ -91,7 +91,7 @@ public class GameScreen implements Screen {
 
         //enemy type 2
         enemySquidShipTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN-01");
-        enemySquidShieldTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN-01");
+        enemySquidShieldTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN ESCUDO-01");
         enemySquidShieldTextureRegion.flip(false, true);
         enemySquidLaserTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN TIRO-01");
 
@@ -107,15 +107,6 @@ public class GameScreen implements Screen {
         enemyShipList = new LinkedList<>();
         playerLaserList = new LinkedList<>();
         enemyLaserList = new LinkedList<>();
-
-
-        enemyShipList.add(new SquidEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
-                (float) WORLD_HEIGHT - 5,
-                6, 14,
-                20, 20,
-                2, 3.5f,
-                2, 0.8f,
-                enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion));
 
         batch = new SpriteBatch();
     }
@@ -158,14 +149,29 @@ public class GameScreen implements Screen {
     private void spawnEnemyShip(float deltaTime) {
         enemySpanTimer += deltaTime;
         if (enemySpanTimer > timeBetweenEnemySpawns && quantityEnemies < MAX_ENEMIES) {
-            enemyShipList.add(new CellEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
-                    (float) WORLD_HEIGHT - 5,
-                    6, 14,
-                    20, 20,
-                    2, 3.5f,
-                    2, 0.8f,
-                    enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion));
-            enemySpanTimer -= timeBetweenEnemySpawns;
+
+            System.out.println(Math.abs(deltaTime * SpaceInvaders.random.nextFloat() * 100));
+
+            if ( (int) (deltaTime * SpaceInvaders.random.nextFloat() * 100) % 2 == 0) {
+                enemyShipList.add(new CellEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
+                        (float) WORLD_HEIGHT - 5,
+                        6, 14,
+                        15, 20,
+                        2, 4f,
+                        2, 0.8f,
+                        enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion));
+                enemySpanTimer -= timeBetweenEnemySpawns;
+            } else {
+
+                enemyShipList.add(new SquidEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
+                        (float) WORLD_HEIGHT - 5,
+                        3f, 14,
+                        15, 20,
+                        2f, 6f,
+                        2, 0.8f,
+                        enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion));
+            }
+
             quantityEnemies++;
         }
 
@@ -294,7 +300,7 @@ public class GameScreen implements Screen {
         }
 
         //enemy lasers
-        for (EnemyShip enemyShip: enemyShipList){
+        for (EnemyShip enemyShip : enemyShipList) {
             if (enemyShip.canFireLaser()) {
                 Laser[] lasers = enemyShip.fireLasers();
                 Collections.addAll(enemyLaserList, lasers);

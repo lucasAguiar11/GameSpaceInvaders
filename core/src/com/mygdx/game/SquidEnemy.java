@@ -9,15 +9,10 @@ public class SquidEnemy extends EnemyShip {
     }
     @Override
     public Laser[] fireLasers() {
-        Laser[] laser = new Laser[2];
+        Laser[] laser = new Laser[1];
 
         //onde o laser vai sair da nave
-        laser[0] = new Laser(boudingBox.x + boudingBox.width * 0.18f,
-                boudingBox.y - laserHeight,
-                laserWidth, laserHeight,
-                laserMovementSpeed, laserTextureRegion);
-
-        laser[1] = new Laser(boudingBox.x + boudingBox.width * 0.82f,
+        laser[0] = new Laser(boudingBox.x + boudingBox.width * 0.85f ,
                 boudingBox.y - laserHeight,
                 laserWidth, laserHeight,
                 laserMovementSpeed, laserTextureRegion);
@@ -34,6 +29,6 @@ public class SquidEnemy extends EnemyShip {
             batch.draw(shieldTextureRegion,
                     boudingBox.x,
                     boudingBox.y - boudingBox.height * 0.5f,
-                    boudingBox.width, boudingBox.height * 0.5f);
+                    boudingBox.width, boudingBox.height * 0.4f);
     }
 }
