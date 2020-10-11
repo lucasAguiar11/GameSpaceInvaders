@@ -58,10 +58,12 @@ abstract class Ship {
         return boudingBox.overlaps(rectangle);
     }
 
-    public void hit(Laser laser) {
+    public boolean hitAndCheckDestroyed(Laser laser) {
         if (shield > 0) {
             shield--;
+            return false;
         }
+        return true;
     }
 
     public void translate(float xChange, float yChange) {
