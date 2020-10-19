@@ -159,7 +159,7 @@ public class GameScreen implements Screen {
         batch.begin();
 
         //Scrolling with paralax
-        renderBackground(deltaTime);
+        renderBackground(deltaTime); 
 
         detectInput(deltaTime);
 
