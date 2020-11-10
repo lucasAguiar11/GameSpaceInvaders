@@ -1,10 +1,11 @@
-package com.mygdx.game;
+package com.mygdx.game.ships.player;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.effects.Laser;
 
-public class PlayerShip extends Ship {
+public class PlayerShip extends com.mygdx.game.ships.Ship {
 
-    int lives;
+    public int lives;
 
     public PlayerShip(float xCentre, float yCentre,
                       float width, float height,

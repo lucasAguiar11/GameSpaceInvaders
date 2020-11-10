@@ -1,8 +1,11 @@
-package com.mygdx.game;
+package com.mygdx.game.ships.enemy;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.effects.Laser;
+import com.mygdx.game.SpaceInvaders;
+import com.mygdx.game.ships.Ship;
 
 public class EnemyShip extends Ship {
 

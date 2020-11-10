@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,6 +17,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.effects.Explosion;
+import com.mygdx.game.effects.Laser;
+import com.mygdx.game.SpaceInvaders;
+import com.mygdx.game.ships.enemy.SquidEnemy;
+import com.mygdx.game.ships.enemy.BossEnemy;
+import com.mygdx.game.ships.enemy.CellEnemy;
+import com.mygdx.game.ships.enemy.EnemyShip;
+import com.mygdx.game.ships.player.PlayerShip;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -27,6 +35,8 @@ public class GameScreen implements Screen {
 
     private Camera camera;
     private Viewport viewport;
+    public boolean hasDefeated = false;
+
 
     private SpriteBatch batch;
     private TextureAtlas textureAtlas;
@@ -41,15 +51,19 @@ public class GameScreen implements Screen {
     //Enemy type 1
     private TextureRegion enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion;
 
-    //Enemy type 1
+    //Enemy type 2
     private TextureRegion enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion;
 
+    //boss
+    private TextureRegion enemyBossTextureRegion, enemyBossLaserTextureRegion;
 
     private float[] backgroundOffSets = {0, 0, 0, 0, 0, 0};
     private float backgroundMaxScrollingSpeed;
     private float timeBetweenEnemySpawns = 3f;
     private float enemySpanTimer = 0;
-    private int quantityEnemies = 0;
+    public int quantityEnemies = 0;
+    public boolean hasBoss = false;
+
 
     private final int WORLD_WIDTH = 28;
     private final int WORLD_HEIGHT = 128;
@@ -57,19 +71,18 @@ public class GameScreen implements Screen {
     private final int MAX_ENEMIES = 3;
 
     //gameObjects
-    private PlayerShip playerShip;
-    private LinkedList<EnemyShip> enemyShipList;
+    public com.mygdx.game.ships.player.PlayerShip playerShip;
+    public LinkedList<com.mygdx.game.ships.enemy.EnemyShip> enemyShipList;
     private LinkedList<Laser> playerLaserList;
     private LinkedList<Laser> enemyLaserList;
     private LinkedList<Explosion> explosionList;
 
-    private int score = 0;
+    public int score = 0;
 
     //Heads-Up Display
     BitmapFont font;
     float hudVerticalMargin, hudLeftX, hudRightX, hudCentreX, hudRowY, hudRow2Y, hudSectionWidth;
-
-    GameScreen() {
+    public GameScreen() {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
@@ -109,6 +122,10 @@ public class GameScreen implements Screen {
         enemySquidShieldTextureRegion.flip(false, true);
         enemySquidLaserTextureRegion = TextureSpaceAtlas.findRegion("LULA ALIEN TIRO-01");
 
+        //boss
+        enemyBossTextureRegion = TextureSpaceAtlas.findRegion("minion-01");
+        enemyBossLaserTextureRegion = TextureSpaceAtlas.findRegion("minio tiro-01");
+
         explosionTexture = new Texture("explosion.png");
 
         //set up game obj
@@ -130,9 +147,12 @@ public class GameScreen implements Screen {
         prepareHUD();
     }
 
+
     private void prepareHUD(){
+
         FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("EdgeOfTheGalaxyRegular-OVEa6.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
 
         fontParameter.size = 32;
         fontParameter.borderWidth = 3.6f;
@@ -140,9 +160,7 @@ public class GameScreen implements Screen {
         fontParameter.borderColor = new Color(0,0,0,0.3f);
 
         font = fontGenerator.generateFont(fontParameter);
-
         font.getData().setScale(0.06f);
-
         //calculate hud margins, etc.
         hudVerticalMargin = font.getCapHeight();
         hudLeftX = hudVerticalMargin;
@@ -158,6 +176,9 @@ public class GameScreen implements Screen {
     public void render(float deltaTime) {
         batch.begin();
 
+        //morreu?
+        verifyStatusPlayer();
+
         //Scrolling with paralax
         renderBackground(deltaTime); 
 
@@ -167,7 +188,7 @@ public class GameScreen implements Screen {
 
         spawnEnemyShip(deltaTime);
 
-        for (EnemyShip enemyShip : enemyShipList) {
+        for (com.mygdx.game.ships.enemy.EnemyShip enemyShip : enemyShipList) {
             moveEnemies(enemyShip, deltaTime);
             enemyShip.update(deltaTime);
             enemyShip.draw(batch);
@@ -191,19 +212,28 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
+
+    private void verifyStatusPlayer(){
+        if(playerShip.lives < 1)
+            hasDefeated = true;
+    }
+
+
     private void updateAndRenderHUD() {
         //render top row labels
         font.draw(batch, "Pontos", hudLeftX, hudRowY, hudSectionWidth, Align.left, false);
         font.draw(batch, "Escudos", hudCentreX, hudRowY, hudSectionWidth, Align.center, false);
         font.draw(batch, "Vidas", hudRightX, hudRowY, hudSectionWidth, Align.right, false);
+
         //render second row values
         font.draw(batch, String.format(Locale.getDefault(), "%06d", score), hudLeftX, hudRow2Y, hudSectionWidth, Align.left, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", playerShip.shield), hudCentreX, hudRow2Y, hudSectionWidth, Align.center, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", playerShip.lives), hudRightX, hudRow2Y, hudSectionWidth, Align.right, false);
     }
+
     private void spawnEnemyShip(float deltaTime) {
         enemySpanTimer += deltaTime;
-        if (enemySpanTimer > timeBetweenEnemySpawns && quantityEnemies < MAX_ENEMIES) {
+        if (enemySpanTimer > timeBetweenEnemySpawns && quantityEnemies < MAX_ENEMIES && !hasBoss) {
 
             System.out.println(Math.abs(deltaTime * SpaceInvaders.random.nextFloat() * 100));
 
@@ -230,9 +260,27 @@ public class GameScreen implements Screen {
             quantityEnemies++;
         }
 
+        if(hasBoss && quantityEnemies < 1){
+
+            quantityEnemies = 0;
+            enemyShipList.clear();
+
+            enemyShipList.add(new BossEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
+                    (float) WORLD_HEIGHT - 5,
+                    15f, 32,
+                    20, 150, //20
+                    2f, 6f,
+                    2, 0.8f,
+                    enemyBossTextureRegion, enemySquidShieldTextureRegion, enemyBossLaserTextureRegion));
+
+            quantityEnemies++;
+        }
+
+
+
     }
 
-    private void moveEnemies(EnemyShip enemyShip, float deltaTime) {
+    private void moveEnemies(com.mygdx.game.ships.enemy.EnemyShip enemyShip, float deltaTime) {
         //keyboard input
         float leftLimit, rightLimit, upLimit, downLimit;
         leftLimit = -enemyShip.boudingBox.x;
@@ -318,7 +366,7 @@ public class GameScreen implements Screen {
         ListIterator<Laser> laserListIterator = playerLaserList.listIterator();
         while (laserListIterator.hasNext()) {
             Laser laser = laserListIterator.next();
-            for (EnemyShip enemyShip : enemyShipList) {
+            for (com.mygdx.game.ships.enemy.EnemyShip enemyShip : enemyShipList) {
                 if (enemyShip.intersects(laser.boudingBox)) {
                     //contact enemy
                     if (enemyShip.hitAndCheckDestroyed(laser)) {
@@ -327,11 +375,14 @@ public class GameScreen implements Screen {
                         explosionList.add(new Explosion(explosionTexture, new Rectangle(enemyShip.boudingBox), 0.7f));
                     }
                     score += 100;
+
+                    if(score >= 2000)
+                        hasBoss = true;
+
                     laserListIterator.remove();
                     break;
                 }
             }
-
         }
 
         //for each enemy laser, check intersects

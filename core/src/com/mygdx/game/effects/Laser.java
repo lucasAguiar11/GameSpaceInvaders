@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.effects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,13 +8,13 @@ import com.badlogic.gdx.math.Rectangle;
 public class Laser {
 
     //position and dimensions
-    Rectangle boudingBox;
+    public Rectangle boudingBox;
 
     //laser physical
-    float movimentSpeed;
+    public float movimentSpeed;
 
     //graphics
-    TextureRegion textureRegion;
+    public TextureRegion textureRegion;
 
     public Laser(float xPosition, float yPosition,
                  float width, float height,

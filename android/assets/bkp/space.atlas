@@ -41,14 +41,14 @@ ESTRELA  MEDIAS E PEQUENAS
   index: -1
 LULA ALIEN ESCUDO-01
   rotate: false
-  xy: 4501, 1576
+  xy: 4501, 3281
   size: 1072, 692
   orig: 1072, 692
   offset: 0, 0
   index: -1
 LULA ALIEN TIRO-01
   rotate: false
-  xy: 5573, 2071
+  xy: 4501, 3084
   size: 109, 197
   orig: 109, 197
   offset: 0, 0
@@ -79,20 +79,6 @@ TIRO01
   xy: 0, 0
   size: 162, 253
   orig: 162, 253
-  offset: 0, 0
-  index: -1
-minio tiro-01
-  rotate: false
-  xy: 4501, 1351
-  size: 97, 225
-  orig: 97, 225
-  offset: 0, 0
-  index: -1
-minion-01
-  rotate: false
-  xy: 4501, 2268
-  size: 1976, 1705
-  orig: 1976, 1705
   offset: 0, 0
   index: -1
 

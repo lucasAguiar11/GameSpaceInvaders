@@ -1,26 +1,27 @@
-package com.mygdx.game;
+package com.mygdx.game.ships;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.effects.Laser;
 
-abstract class Ship {
+public abstract class Ship {
 
     //charecteristcts
-    float movimentSpeed;
-    int shield;
+    public float movimentSpeed;
+    public int shield;
 
     //position & dimensions
-    Rectangle boudingBox;
+    public Rectangle boudingBox;
 
     //graphics
-    TextureRegion shipTextureRegion, shieldTextureRegion, laserTextureRegion;
+    public TextureRegion shipTextureRegion, shieldTextureRegion, laserTextureRegion;
 
     //laser
-    float laserWidth, laserHeight;
-    float laserMovementSpeed;
-    float timeBetweenShots;
-    float timeSinceLaserShot = 0;
+    public float laserWidth, laserHeight;
+    public float laserMovementSpeed;
+    public float timeBetweenShots;
+    public float timeSinceLaserShot = 0;
 
     public Ship(
             float xCentre, float yCentre,

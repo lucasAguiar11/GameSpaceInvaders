@@ -1,33 +1,55 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.screens.GameOver;
+import com.mygdx.game.screens.GameScreen;
 
 import java.util.Random;
 
 public class SpaceInvaders extends Game {
 
-	GameScreen gameScreen;
+	com.mygdx.game.screens.GameScreen gameScreen;
+	com.mygdx.game.screens.GameOver gameOverScreen;
 
 	public static Random random = new Random();
 
 	@Override
 	public void create() {
 		gameScreen = new GameScreen();
-		setScreen(gameScreen);
+		gameOverScreen = new GameOver();
+
+		if(gameScreen.hasDefeated){
+			setScreen(gameOverScreen);
+		}else{
+			setScreen(gameScreen);
+		}
+
 	}
 
 	@Override
 	public void dispose() {
 		gameScreen.dispose();
+		gameOverScreen.dispose();
 	}
 
 	@Override
 	public void render() {
+
+		if(gameScreen.hasDefeated){
+			setScreen(gameOverScreen);
+		}
+
+		if(gameOverScreen.getIsDone()){
+			gameOverScreen = new GameOver();
+			gameScreen.hasDefeated = false;
+			gameScreen.playerShip.lives = 3;
+			gameScreen.quantityEnemies = 0;
+			gameScreen.hasBoss = false;
+			gameScreen.score = 0;
+			gameScreen.enemyShipList.clear();
+			setScreen(gameScreen);
+		}
+
 		super.render();
 	}
 

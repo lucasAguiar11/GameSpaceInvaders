@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.effects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,7 +13,7 @@ public class Explosion {
 
     private Rectangle boundingBox;
 
-    Explosion(Texture texture, Rectangle boundingBox, float totalAnimationTime) {
+    public Explosion(Texture texture, Rectangle boundingBox, float totalAnimationTime) {
         this.boundingBox = boundingBox;
 
         //split texture
