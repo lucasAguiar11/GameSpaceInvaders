@@ -36,6 +36,8 @@ public class GameScreen implements Screen {
     private Camera camera;
     private Viewport viewport;
     public boolean hasDefeated = false;
+    public boolean hasVictory = false;
+    public boolean hasBoss = false;
 
 
     private SpriteBatch batch;
@@ -59,23 +61,22 @@ public class GameScreen implements Screen {
 
     private float[] backgroundOffSets = {0, 0, 0, 0, 0, 0};
     private float backgroundMaxScrollingSpeed;
-    private float timeBetweenEnemySpawns = 3f;
-    private float enemySpanTimer = 0;
+    public float timeBetweenEnemySpawns = 3f;
+    public float enemySpanTimer = 0;
     public int quantityEnemies = 0;
-    public boolean hasBoss = false;
-
+    public int level = 1;
 
     private final int WORLD_WIDTH = 28;
     private final int WORLD_HEIGHT = 128;
     private final float TOUCH_MOVIMENT_THRESHOLD = 0.5f;
-    private final int MAX_ENEMIES = 3;
+    private final int MAX_ENEMIES = 2;
 
     //gameObjects
     public com.mygdx.game.ships.player.PlayerShip playerShip;
     public LinkedList<com.mygdx.game.ships.enemy.EnemyShip> enemyShipList;
-    private LinkedList<Laser> playerLaserList;
-    private LinkedList<Laser> enemyLaserList;
-    private LinkedList<Explosion> explosionList;
+    public LinkedList<Laser> playerLaserList;
+    public LinkedList<Laser> enemyLaserList;
+    public LinkedList<Explosion> explosionList;
 
     public int score = 0;
 
@@ -224,6 +225,7 @@ public class GameScreen implements Screen {
         font.draw(batch, "Pontos", hudLeftX, hudRowY, hudSectionWidth, Align.left, false);
         font.draw(batch, "Escudos", hudCentreX, hudRowY, hudSectionWidth, Align.center, false);
         font.draw(batch, "Vidas", hudRightX, hudRowY, hudSectionWidth, Align.right, false);
+        font.draw(batch, "Level", hudRightX, 0, hudSectionWidth, Align.center, false);
 
         //render second row values
         font.draw(batch, String.format(Locale.getDefault(), "%06d", score), hudLeftX, hudRow2Y, hudSectionWidth, Align.left, false);
@@ -233,7 +235,7 @@ public class GameScreen implements Screen {
 
     private void spawnEnemyShip(float deltaTime) {
         enemySpanTimer += deltaTime;
-        if (enemySpanTimer > timeBetweenEnemySpawns && quantityEnemies < MAX_ENEMIES && !hasBoss) {
+        if (enemySpanTimer > timeBetweenEnemySpawns && quantityEnemies < (MAX_ENEMIES + level) && !hasBoss) {
 
             System.out.println(Math.abs(deltaTime * SpaceInvaders.random.nextFloat() * 100));
 
@@ -243,7 +245,7 @@ public class GameScreen implements Screen {
                         6, 14,
                         15, 10,
                         2, 4f,
-                        2, 0.8f,
+                        2, 1f,
                         enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion));
                 enemySpanTimer -= timeBetweenEnemySpawns;
             } else {
@@ -252,8 +254,8 @@ public class GameScreen implements Screen {
                         (float) WORLD_HEIGHT - 5,
                         3f, 14,
                         15, 10,
-                        2f, 6f,
-                        2, 0.8f,
+                        2f, 4f,
+                        2, 1f,
                         enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion));
             }
 
@@ -268,10 +270,10 @@ public class GameScreen implements Screen {
             enemyShipList.add(new BossEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
                     (float) WORLD_HEIGHT - 5,
                     15f, 32,
-                    20, 150, //20
+                    20, 1, //20
                     2f, 6f,
                     2, 0.8f,
-                    enemyBossTextureRegion, enemySquidShieldTextureRegion, enemyBossLaserTextureRegion));
+                    enemyBossTextureRegion, enemySquidShieldTextureRegion, enemyBossLaserTextureRegion, true));
 
             quantityEnemies++;
         }
@@ -371,6 +373,10 @@ public class GameScreen implements Screen {
                     //contact enemy
                     if (enemyShip.hitAndCheckDestroyed(laser)) {
                         enemyShipList.remove();
+
+                        if (enemyShip.IsABoss()){
+                            hasVictory = true;
+                        }
                         quantityEnemies--;
                         explosionList.add(new Explosion(explosionTexture, new Rectangle(enemyShip.boudingBox), 0.7f));
                     }

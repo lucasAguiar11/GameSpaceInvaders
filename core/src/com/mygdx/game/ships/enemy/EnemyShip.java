@@ -12,6 +12,7 @@ public class EnemyShip extends Ship {
     Vector2 directionVector;
     float timeSinceLastDirectionChange = 0;
     float directionChangeFrequency = 0.75f;
+    private boolean Boss = false;
 
     public EnemyShip(float xCentre, float yCentre,
                      float width, float height,
@@ -19,11 +20,15 @@ public class EnemyShip extends Ship {
                      float laserWidth, float laserHeight,
                      float laserMovementSpeed, float timeBetweenShots,
                      TextureRegion shiTexture, TextureRegion shieldTextureRegion,
-                     TextureRegion laserTextureRegion) {
+                     TextureRegion laserTextureRegion,
+                     boolean boss) {
         super(xCentre, yCentre, width, height, movimentSpeed, shield, laserWidth, laserHeight, laserMovementSpeed, timeBetweenShots, shiTexture, shieldTextureRegion, laserTextureRegion);
 
+        this.Boss = boss;
         directionVector = new Vector2(0, -1);
     }
+
+    public boolean IsABoss(){ return Boss;}
 
     public Vector2 getDirectionVector() {
         return directionVector;

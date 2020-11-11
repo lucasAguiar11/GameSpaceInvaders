@@ -7,7 +7,7 @@ import com.mygdx.game.effects.Laser;
 
 public class CellEnemy extends EnemyShip {
     public CellEnemy(float xCentre, float yCentre, float width, float height, float movimentSpeed, int shield, float laserWidth, float laserHeight, float laserMovementSpeed, float timeBetweenShots, TextureRegion shiTexture, TextureRegion shieldTextureRegion, TextureRegion laserTextureRegion) {
-        super(xCentre, yCentre, width, height, movimentSpeed, shield, laserWidth, laserHeight, laserMovementSpeed, timeBetweenShots, shiTexture, shieldTextureRegion, laserTextureRegion);
+        super(xCentre, yCentre, width, height, movimentSpeed, shield, laserWidth, laserHeight, laserMovementSpeed, timeBetweenShots, shiTexture, shieldTextureRegion, laserTextureRegion, false);
     }
 
     @Override

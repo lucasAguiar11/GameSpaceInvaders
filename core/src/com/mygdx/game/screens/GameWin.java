@@ -8,15 +8,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Align;
 
-public class GameOver implements Screen {
+public class GameWin implements Screen {
 
     /** the SpriteBatch used to draw the background, logo and text **/
     private final SpriteBatch spriteBatch;
     /** the background texture **/
-    private final Texture background;
+    private final TextureRegion background;
     /** the logo texture **/
     private final Texture logo;
     /** the font **/
@@ -28,16 +30,21 @@ public class GameOver implements Screen {
     private final Matrix4 transformMatrix = new Matrix4();
     private final GlyphLayout glyphLayout = new GlyphLayout();
 
+    private TextureRegion[] backgrounds;
+    private TextureAtlas TextureSpaceAtlas;
 
-    public GameOver(){
+    public GameWin(){
         spriteBatch = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("darkPurpleStarscape.png"));
-        background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        background = new Texture(Gdx.files.internal("darkPurpleStarscape.png"));
+//        background.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        logo = new Texture(Gdx.files.internal("data/title.png"));
+        logo = new Texture(Gdx.files.internal("data/vencedor.png"));
         logo.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font = new BitmapFont(Gdx.files.internal("data/font16.fnt"), false);
 
-        font = new BitmapFont(Gdx.files.internal("data/font16.fnt"), Gdx.files.internal("data/font16.png"), false);
+        TextureSpaceAtlas = new TextureAtlas("space.atlas");
+        background = TextureSpaceAtlas.findRegion("ESTRELA  PEQUENA");
+
     }
 
     public boolean getIsDone(){
@@ -51,25 +58,28 @@ public class GameOver implements Screen {
 
     @Override
     public void render(float delta) {
+
         if (Gdx.input.justTouched()) {
             isDone = true;
         }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         viewMatrix.setToOrtho2D(0, 0, 480, 320);
         spriteBatch.setProjectionMatrix(viewMatrix);
         spriteBatch.setTransformMatrix(transformMatrix);
         spriteBatch.begin();
+
         spriteBatch.disableBlending();
         spriteBatch.setColor(Color.WHITE);
-        spriteBatch.draw(background, 0, 0, 480, 320, 0, 0, 512, 512, false, false);
+
+        spriteBatch.draw(background, 0, 0, 480, 320);
         spriteBatch.enableBlending();
-        spriteBatch.draw(logo, 0, 128, 480, 128, 0, 256, 512, 256, false, false);
-        glyphLayout.setText(font, "Toque na tela para tentar novamente!",
-                Color.WHITE, 200, Align.center, true);
+        spriteBatch.draw(logo, 10, 170, 460, 50, 0, 0, 564, 54, false, false);
+        glyphLayout.setText(font, "Parabens voce venceu o jogo!\nPara ir ao proximo nivel clique na tela!",
+                Color.WHITE, 500, Align.center, true);
+
         spriteBatch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        font.draw(spriteBatch, glyphLayout, glyphLayout.width - 70, glyphLayout.height + 70 );
+        font.draw(spriteBatch, glyphLayout, 0, 140);
         spriteBatch.end();
 
     }
@@ -96,9 +106,6 @@ public class GameOver implements Screen {
 
     @Override
     public void dispose() {
-        spriteBatch.dispose();
-        background.dispose();
-        logo.dispose();
-        font.dispose();
+
     }
 }

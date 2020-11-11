@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.effects.Laser;
 
 public class BossEnemy extends EnemyShip {
-    public BossEnemy(float xCentre, float yCentre, float width, float height, float movimentSpeed, int shield, float laserWidth, float laserHeight, float laserMovementSpeed, float timeBetweenShots, TextureRegion shiTexture, TextureRegion shieldTextureRegion, TextureRegion laserTextureRegion) {
-        super(xCentre, yCentre, width, height, movimentSpeed, shield, laserWidth, laserHeight, laserMovementSpeed, timeBetweenShots, shiTexture, shieldTextureRegion, laserTextureRegion);
+    public BossEnemy(float xCentre, float yCentre, float width, float height, float movimentSpeed, int shield, float laserWidth, float laserHeight, float laserMovementSpeed, float timeBetweenShots, TextureRegion shiTexture, TextureRegion shieldTextureRegion, TextureRegion laserTextureRegion, boolean boss) {
+        super(xCentre, yCentre, width, height, movimentSpeed, shield, laserWidth, laserHeight, laserMovementSpeed, timeBetweenShots, shiTexture, shieldTextureRegion, laserTextureRegion, boss);
     }
 
     @Override
