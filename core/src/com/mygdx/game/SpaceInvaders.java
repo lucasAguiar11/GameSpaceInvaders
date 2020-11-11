@@ -31,6 +31,7 @@ public class SpaceInvaders extends Game {
 	@Override
 	public void dispose() {
 		gameScreen.dispose();
+		gameWinScreen.dispose();
 		gameOverScreen.dispose();
 	}
 

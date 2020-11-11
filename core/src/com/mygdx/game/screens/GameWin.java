@@ -106,6 +106,8 @@ public class GameWin implements Screen {
 
     @Override
     public void dispose() {
-
+        spriteBatch.dispose();
+        logo.dispose();
+        font.dispose();
     }
 }

@@ -225,7 +225,7 @@ public class GameScreen implements Screen {
         font.draw(batch, "Pontos", hudLeftX, hudRowY, hudSectionWidth, Align.left, false);
         font.draw(batch, "Escudos", hudCentreX, hudRowY, hudSectionWidth, Align.center, false);
         font.draw(batch, "Vidas", hudRightX, hudRowY, hudSectionWidth, Align.right, false);
-        font.draw(batch, "Level", hudRightX, 0, hudSectionWidth, Align.center, false);
+        font.draw(batch, "Level", hudRightX, 10, hudSectionWidth, Align.center, false);
 
         //render second row values
         font.draw(batch, String.format(Locale.getDefault(), "%06d", score), hudLeftX, hudRow2Y, hudSectionWidth, Align.left, false);
@@ -266,6 +266,7 @@ public class GameScreen implements Screen {
 
             quantityEnemies = 0;
             enemyShipList.clear();
+            enemyLaserList.clear();
 
             enemyShipList.add(new BossEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
                     (float) WORLD_HEIGHT - 5,
@@ -524,6 +525,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        font.dispose();
+        textureAtlas.dispose();;
+        TextureSpaceAtlas.dispose();;
+        explosionTexture.dispose();;
     }
 }
