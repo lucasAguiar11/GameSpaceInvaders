@@ -21,11 +21,7 @@ public class SpaceInvaders extends Game {
 		gameOverScreen = new GameOver();
 		gameWinScreen = new GameWin();
 
-		if(gameScreen.hasDefeated){
-			setScreen(gameOverScreen);
-		}else{
-			setScreen(gameScreen);
-		}
+		setScreen(gameScreen);
 	}
 
 	@Override
@@ -41,7 +37,7 @@ public class SpaceInvaders extends Game {
 		if(gameScreen.hasDefeated){
 			setScreen(gameOverScreen);
 		}
-		
+
 		if(gameScreen.hasVictory){
 			setScreen(gameWinScreen);
 		}
@@ -49,6 +45,7 @@ public class SpaceInvaders extends Game {
 		if(gameOverScreen.getIsDone()){
 			gameOverScreen = new GameOver();
 			clearGame();
+			gameScreen.level = 1;
 			setScreen(gameScreen);
 		}
 

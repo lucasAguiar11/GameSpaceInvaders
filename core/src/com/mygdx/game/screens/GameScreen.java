@@ -134,7 +134,7 @@ public class GameScreen implements Screen {
                 (float) WORLD_WIDTH / 2, (float) WORLD_HEIGHT / 4,
                 6, 14,
                 48, 6,
-                0.4f, 5, 2, 0.5f,
+                0.4f, 5, 2, 1f,
                 playerShipTextureRegion, playerShieldTextureRegion, playerLaserTextureRegion);
 
 
@@ -177,11 +177,9 @@ public class GameScreen implements Screen {
     public void render(float deltaTime) {
         batch.begin();
 
-        //morreu?
-        verifyStatusPlayer();
 
         //Scrolling with paralax
-        renderBackground(deltaTime); 
+        renderBackground(deltaTime);
 
         detectInput(deltaTime);
 
@@ -189,11 +187,14 @@ public class GameScreen implements Screen {
 
         spawnEnemyShip(deltaTime);
 
-        for (com.mygdx.game.ships.enemy.EnemyShip enemyShip : enemyShipList) {
+       for (com.mygdx.game.ships.enemy.EnemyShip enemyShip : enemyShipList) {
             moveEnemies(enemyShip, deltaTime);
             enemyShip.update(deltaTime);
             enemyShip.draw(batch);
         }
+
+        //morreu?
+        verifyStatusPlayer();
 
         //player
         playerShip.draw(batch);
@@ -225,12 +226,13 @@ public class GameScreen implements Screen {
         font.draw(batch, "Pontos", hudLeftX, hudRowY, hudSectionWidth, Align.left, false);
         font.draw(batch, "Escudos", hudCentreX, hudRowY, hudSectionWidth, Align.center, false);
         font.draw(batch, "Vidas", hudRightX, hudRowY, hudSectionWidth, Align.right, false);
-        font.draw(batch, "Level", hudRightX, 10, hudSectionWidth, Align.center, false);
+        font.draw(batch, "Level", 1, 5, hudSectionWidth, Align.left, false);
 
         //render second row values
         font.draw(batch, String.format(Locale.getDefault(), "%06d", score), hudLeftX, hudRow2Y, hudSectionWidth, Align.left, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", playerShip.shield), hudCentreX, hudRow2Y, hudSectionWidth, Align.center, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", playerShip.lives), hudRightX, hudRow2Y, hudSectionWidth, Align.right, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%02d", level), 7, 5, hudSectionWidth, Align.left, false);
     }
 
     private void spawnEnemyShip(float deltaTime) {
@@ -245,7 +247,7 @@ public class GameScreen implements Screen {
                         6, 14,
                         15, 10,
                         2, 4f,
-                        2, 1f,
+                        2, 0.7f,
                         enemyShipTextureRegion, enemyShieldTextureRegion, enemyLaserTextureRegion));
                 enemySpanTimer -= timeBetweenEnemySpawns;
             } else {
@@ -255,7 +257,7 @@ public class GameScreen implements Screen {
                         3f, 14,
                         15, 10,
                         2f, 4f,
-                        2, 1f,
+                        4, 0.9f,
                         enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion));
             }
 
@@ -271,9 +273,9 @@ public class GameScreen implements Screen {
             enemyShipList.add(new BossEnemy(SpaceInvaders.random.nextFloat() * (WORLD_WIDTH * 16) + 5,
                     (float) WORLD_HEIGHT - 5,
                     15f, 32,
-                    20, 1, //20
+                    20, 30, //20
                     2f, 6f,
-                    2, 0.8f,
+                    2, 1f,
                     enemyBossTextureRegion, enemySquidShieldTextureRegion, enemyBossLaserTextureRegion, true));
 
             quantityEnemies++;
