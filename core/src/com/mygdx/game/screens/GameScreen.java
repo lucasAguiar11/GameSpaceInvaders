@@ -68,7 +68,7 @@ public class GameScreen implements Screen {
 
     private final int WORLD_WIDTH = 28;
     private final int WORLD_HEIGHT = 128;
-    private final float TOUCH_MOVIMENT_THRESHOLD = 0.5f;
+    private final float TOUCH_MOVIMENT_THRESHOLD = 1f;
     private final int MAX_ENEMIES = 2;
 
     //gameObjects
@@ -257,7 +257,7 @@ public class GameScreen implements Screen {
                         3f, 14,
                         15, 10,
                         2f, 4f,
-                        4, 0.9f,
+                        2f, 0.9f,
                         enemySquidShipTextureRegion, enemySquidShieldTextureRegion, enemySquidLaserTextureRegion));
             }
 

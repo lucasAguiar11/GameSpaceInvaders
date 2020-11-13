@@ -50,8 +50,8 @@ public class SpaceInvaders extends Game {
 		}
 
 		if( gameWinScreen.getIsDone()){
-			clearGame();
 			gameWinScreen = new GameWin();
+			clearGame();
 			gameScreen.level += 1;
 			setScreen(gameScreen);
 		}
